@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tshepi's scent</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose-dark: #7d3349;
+      --rose-mid: #a3526b;
+      --rose-light: #c97a92;
+      --rose-pale: #e8a4b8;
+      --rose-bg: #fdf0f3;
+      --cream-bg: #fdfaf7;
+      --gold: #c9a96e;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--cream-bg);
+      color: var(--rose-dark);
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAVBAR ── */
+    .navbar-wrap {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; justify-content: center; padding: 12px 16px;
+    }
+    nav {
+      background: rgba(253,240,243,0.88);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(232,164,184,0.3);
+      border-radius: 999px;
+      padding: 10px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      width: 100%; max-width: 720px;
+    }
+    .nav-brand { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; color: var(--rose-mid); }
+    .nav-links { display: flex; align-items: center; gap: 16px; }
+    .nav-links a { font-size: 0.72rem; color: var(--rose-light); transition: color .2s; }
+    .nav-links a:hover { color: var(--rose-mid); }
+    .nav-cta {
+      font-size: 0.72rem; font-weight: 500;
+      background: var(--rose-mid); color: #fff;
+      border-radius: 999px; padding: 6px 16px;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: var(--rose-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 112px 24px 64px;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, #f7cdd9 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 85% 30%, #f9e0e8 0%, transparent 50%),
+        radial-gradient(ellipse 70% 80% at 50% 90%, #f3c5d4 0%, transparent 60%),
+        #fdf0f3;
+      position: relative; overflow: hidden;
+    }
+    .hero-blob1 {
+      position: absolute; top: -60px; right: -60px; width: 280px; height: 280px;
+      border-radius: 50%; opacity: 0.3; pointer-events: none;
+      background: radial-gradient(circle, #f7cdd9, transparent 70%);
+      animation: float1 7s ease-in-out infinite;
+    }
+    .hero-blob2 {
+      position: absolute; bottom: -80px; left: -80px; width: 320px; height: 320px;
+      border-radius: 50%; opacity: 0.2; pointer-events: none;
+      background: radial-gradient(circle, #f0c4d4, transparent 70%);
+      animation: float2 9s ease-in-out 1.5s infinite;
+    }
+    .hero-inner { max-width: 420px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+    .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; color: var(--rose-light); text-transform: uppercase; margin-bottom: 12px; }
+    .hero-title { font-family: var(--font-display); font-size: clamp(3.5rem, 12vw, 5rem); font-weight: 300; font-style: italic; color: var(--rose-dark); line-height: 0.95; margin-bottom: 8px; }
+    .hero-title span { font-weight: 600; font-style: normal; color: var(--rose-mid); }
+    .hero-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 20px 0; }
+    .hero-divider-line { height: 1px; width: 64px; }
+    .hero-tagline { font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--rose-light); margin-bottom: 32px; line-height: 1.6; }
+    .hero-tagline span { font-size: 1rem; font-style: normal; font-family: var(--font-body); font-weight: 300; opacity: 0.8; }
+    .trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 32px; }
+    .trust-card {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(232,164,184,0.3);
+      border-radius: 16px; padding: 12px 8px; text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .trust-icon { font-size: 1.1rem; margin-bottom: 4px; }
+    .trust-label { font-size: 0.65rem; color: var(--rose-mid); font-weight: 500; line-height: 1.3; }
+    .hero-ctas { display: flex; flex-direction: column; gap: 10px; }
+    @media (min-width: 480px) { .hero-ctas { flex-direction: row; justify-content: center; } }
+    .btn-primary {
+      font-size: 0.85rem; font-weight: 500;
+      background: var(--rose-mid); color: #fff;
+      border-radius: 999px; padding: 14px 32px;
+      box-shadow: 0 8px 24px rgba(163,82,107,0.25);
+      transition: background .2s; text-align: center;
+    }
+    .btn-primary:hover { background: var(--rose-dark); }
+    .btn-outline {
+      font-size: 0.85rem; font-weight: 500;
+      border: 1px solid var(--rose-pale); color: var(--rose-mid);
+      border-radius: 999px; padding: 14px 32px;
+      transition: background .2s; text-align: center;
+    }
+    .btn-outline:hover { background: var(--rose-bg); }
+    .scroll-indicator {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 4px; opacity: 0.4;
+    }
+    .scroll-indicator span { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-light); }
+    .scroll-line { width: 1px; height: 32px; background: var(--rose-pale); }
+
+    /* ── MARQUEE ── */
+    .marquee-bar {
+      padding: 10px 0; overflow: hidden;
+      background: linear-gradient(90deg, #a3526b, #c9a96e, #a3526b);
+    }
+    .marquee-track {
+      display: flex; white-space: nowrap;
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.9);
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-track span { padding: 0 32px; }
+
+    /* ── SECTION HEADER ── */
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-light); margin-bottom: 10px; }
+    .section-title { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 2.8rem); font-weight: 300; font-style: italic; color: var(--rose-dark); margin-bottom: 12px; }
+    .section-divider { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 16px 0; }
+    .section-desc { font-size: 0.85rem; color: var(--rose-light); max-width: 520px; margin: 0 auto 16px; line-height: 1.7; }
+    .section-price {
+      display: inline-block; font-size: 0.75rem; font-weight: 500;
+      color: var(--rose-mid); border: 1px solid var(--rose-pale);
+      border-radius: 999px; padding: 4px 16px;
+    }
+
+    /* ── SECTIONS ── */
+    .section { padding: 64px 20px; max-width: 1152px; margin: 0 auto; }
+    .section-narrow { max-width: 480px; }
+    .section-medium { max-width: 768px; }
+
+    /* ── PRODUCT GRID ── */
+    .product-grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
+    @media (min-width: 540px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 900px) { .product-grid-3 { grid-template-columns: repeat(3, 1fr); } }
+    .product-grid-2 { grid-template-columns: 1fr; }
+    @media (min-width: 540px) { .product-grid-2 { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ── PRODUCT CARD ── */
+    .product-card {
+      background: #fff;
+      border: 1px solid rgba(232,164,184,0.2);
+      border-radius: 20px; overflow: hidden;
+      transition: box-shadow .3s, transform .3s;
+      cursor: pointer;
+    }
+    .product-card:hover { box-shadow: 0 12px 40px rgba(163,82,107,0.12); transform: translateY(-4px); }
+    .product-img-wrap { position: relative; aspect-ratio: 1/1; overflow: hidden; background: var(--rose-bg); }
+    .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .product-card:hover .product-img-wrap img { transform: scale(1.05); }
+    .product-badge {
+      position: absolute; top: 12px; left: 12px;
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.05em;
+      background: var(--rose-mid); color: #fff;
+      border-radius: 999px; padding: 3px 10px;
+    }
+    .product-type-tag {
+      position: absolute; top: 12px; right: 12px;
+      font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+      background: rgba(255,255,255,0.85); color: var(--rose-light);
+      border-radius: 999px; padding: 3px 10px; backdrop-filter: blur(4px);
+    }
+    .product-body { padding: 18px; }
+    .product-subtitle { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+    .product-name { font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--rose-dark); margin-bottom: 8px; line-height: 1.2; }
+    .product-desc { font-size: 0.78rem; color: var(--rose-light); line-height: 1.6; margin-bottom: 14px; }
+    .product-pieces { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 14px; }
+    .product-piece {
+      font-size: 0.62rem; color: var(--rose-mid);
+      border: 1px solid var(--rose-pale); border-radius: 999px; padding: 2px 8px;
+    }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-family: var(--font-display); font-size: 1.5rem; font-style: italic; color: var(--rose-mid); }
+    .product-wa-btn {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.72rem; font-weight: 500;
+      background: var(--rose-mid); color: #fff;
+      border-radius: 999px; padding: 8px 14px;
+      transition: background .2s; border: none; cursor: pointer;
+    }
+    .product-wa-btn:hover { background: var(--rose-dark); }
+    .product-wa-btn svg { width: 14px; height: 14px; fill: #fff; flex-shrink: 0; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+    @media (min-width: 540px) { .testimonials-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 900px) { .testimonials-grid { grid-template-columns: repeat(3, 1fr); } }
+    .testimonial-card {
+      background: #fff; border: 1px solid rgba(232,164,184,0.2);
+      border-radius: 16px; padding: 20px;
+    }
+    .stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 8px; }
+    .testimonial-text { font-family: var(--font-display); font-size: 1rem; font-style: italic; color: var(--rose-dark); line-height: 1.5; margin-bottom: 12px; }
+    .testimonial-author { display: flex; align-items: center; gap: 8px; }
+    .author-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose-pale), var(--rose-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 500; color: #fff;
+    }
+    .author-name { font-size: 0.72rem; font-weight: 500; color: var(--rose-mid); }
+    .author-location { font-size: 0.65rem; color: var(--rose-light); }
+
+    /* ── HOW TO ORDER ── */
+    .steps-grid { display: grid; gap: 12px; }
+    .step-card {
+      background: linear-gradient(135deg, rgba(253,240,243,0.8), rgba(253,250,247,0.8));
+      border: 1px solid rgba(232,164,184,0.2);
+      border-radius: 16px; padding: 20px; display: flex; align-items: flex-start; gap: 14px;
+    }
+    .step-num {
+      font-family: var(--font-display); font-size: 2rem; font-style: italic;
+      color: var(--rose-pale); font-weight: 300; line-height: 1; flex-shrink: 0; width: 36px;
+    }
+    .step-title { font-size: 0.85rem; font-weight: 500; color: var(--rose-dark); margin-bottom: 2px; }
+    .step-sub { font-size: 0.75rem; color: var(--rose-light); }
+
+    /* ── CTA STRIP ── */
+    .cta-strip {
+      margin: 48px 20px;
+      background: linear-gradient(135deg, var(--rose-bg), #fff5f7);
+      border: 1px solid rgba(232,164,184,0.3);
+      border-radius: 24px; padding: 48px 24px; text-align: center;
+    }
+    .cta-icon { font-size: 2rem; margin-bottom: 16px; }
+    .cta-title { font-family: var(--font-display); font-size: clamp(1.6rem, 5vw, 2.2rem); font-style: italic; color: var(--rose-dark); margin-bottom: 8px; }
+    .cta-sub { font-size: 0.82rem; color: var(--rose-light); margin-bottom: 24px; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.85rem; font-weight: 500;
+      background: #25D366; color: #fff;
+      border-radius: 999px; padding: 14px 28px;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.25);
+      transition: opacity .2s;
+    }
+    .cta-btn:hover { opacity: 0.88; }
+    .cta-btn svg { width: 18px; height: 18px; fill: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--rose-bg);
+      border-top: 1px solid rgba(232,164,184,0.2);
+      padding: 32px 20px; text-align: center;
+    }
+    .footer-brand { font-family: var(--font-display); font-size: 1.4rem; font-style: italic; color: var(--rose-mid); margin-bottom: 4px; }
+    .footer-tagline { font-size: 0.72rem; color: var(--rose-light); margin-bottom: 16px; }
+    .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 16px; }
+    .footer-links a { font-size: 0.72rem; color: var(--rose-light); transition: color .2s; }
+    .footer-links a:hover { color: var(--rose-mid); }
+    .footer-copy { font-size: 0.65rem; color: var(--rose-pale); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes float1 { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-14px) scale(1.04); } }
+    @keyframes float2 { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-10px) scale(0.97); } }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar-wrap">
+    <nav>
+      <a href="#hero" class="nav-brand">tshepi's scent</a>
+      <div class="nav-links">
+        <a href="#singles" class="hidden-mobile">Singles</a>
+        <a href="#combos" class="hidden-mobile">Combos</a>
+        <a href="#" onclick="openWA(event)" class="nav-cta">Order ✦</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <div class="hero-blob1"></div>
+    <div class="hero-blob2"></div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">✦ Curated Fragrance ✦</p>
+      <h1 class="hero-title">tshepi's<br><span>scent</span></h1>
+      <div class="hero-divider">
+        <div class="hero-divider-line" style="background:linear-gradient(90deg,transparent,#c9a96e)"></div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 0l1.6 5.8H16l-5 3.6 1.9 5.8L8 11.6l-4.9 3.6L5 9.4 0 5.8h6.4L8 0z" fill="#c9a96e"/></svg>
+        <div class="hero-divider-line" style="background:linear-gradient(90deg,#c9a96e,transparent)"></div>
+      </div>
+      <p class="hero-tagline">Smell expensive.<br><span>Spend wisely.</span></p>
+      <div class="trust-grid">
+        <div class="trust-card"><div class="trust-icon">✓</div><div class="trust-label">100%<br>Original</div></div>
+        <div class="trust-card"><div class="trust-icon">◌</div><div class="trust-label">Long<br>Lasting</div></div>
+        <div class="trust-card"><div class="trust-icon">♡</div><div class="trust-label">Everyday<br>Luxury</div></div>
+      </div>
+      <div class="hero-ctas">
+        <a href="#singles" class="btn-primary">Shop Singles — R180</a>
+        <a href="#combos" class="btn-outline">Shop Combos — R300</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-bar">
+    <div class="marquee-track">
+      <span>✦ 100% Original</span><span>✦ Long Lasting Scents</span><span>✦ DM to Order</span><span>✦ Hand-Packed With Love</span><span>✦ Fast Delivery</span>
+      <span>✦ 100% Original</span><span>✦ Long Lasting Scents</span><span>✦ DM to Order</span><span>✦ Hand-Packed With Love</span><span>✦ Fast Delivery</span>
+    </div>
+  </div>
+
+  <!-- SINGLES -->
+  <section id="singles" class="section">
+    <div class="section-header">
+      <p class="section-eyebrow">Collection 01</p>
+      <h2 class="section-title">Singles</h2>
+      <div class="section-divider">
+        <div style="height:1px;flex:1;max-width:64px;background:linear-gradient(90deg,transparent,#c9a96e)"></div>
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 0l1.6 5.8H16l-5 3.6 1.9 5.8L8 11.6l-4.9 3.6L5 9.4 0 5.8h6.4L8 0z" fill="#c9a96e"/></svg>
+        <div style="height:1px;flex:1;max-width:64px;background:linear-gradient(90deg,#c9a96e,transparent)"></div>
+      </div>
+      <p class="section-desc">Each single is a carefully curated layering pair — your Yara perfume paired with a complementary designer-inspired scent for a signature combination that lasts all day.</p>
+      <span class="section-price">R180 each</span>
+    </div>
+    <div class="product-grid product-grid-3" id="singles-grid"></div>
+  </section>
+
+  <!-- COMBOS -->
+  <section id="combos" class="section">
+    <div class="section-header">
+      <p class="section-eyebrow">Collection 02</p>
+      <h2 class="section-title">Combos</h2>
+      <div class="section-divider">
+        <div style="height:1px;flex:1;max-width:64px;background:linear-gradient(90deg,transparent,#c9a96e)"></div>
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 0l1.6 5.8H16l-5 3.6 1.9 5.8L8 11.6l-4.9 3.6L5 9.4 0 5.8h6.4L8 0z" fill="#c9a96e"/></svg>
+        <div style="height:1px;flex:1;max-width:64px;background:linear-gradient(90deg,#c9a96e,transparent)"></div>
+      </div>
+      <p class="section-desc">The full fragrance experience. Each combo is a three-piece layering system — body mist, lotion, and perfume — all designed to build a scent that clings beautifully throughout the day.</p>
+      <span class="section-price">R300 per set</span>
+    </div>
+    <div class="product-grid product-grid-2 section-medium" style="margin:0 auto" id="combos-grid"></div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section">
+    <div class="section-header">
+      <p class="section-eyebrow">Why She Orders Again</p>
+      <h2 class="section-title" style="font-size:2rem">What Our Customers Say</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"The Vanilla 28 combo is everything! I get compliments every single day. Worth every cent."</p>
+        <div class="testimonial-author"><div class="author-avatar">TM</div><div><div class="author-name">Thandi M.</div><div class="author-location">Johannesburg</div></div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Finally found an affordable perfume that actually lasts. The Sol de Janeiro one is my new signature scent!"</p>
+        <div class="testimonial-author"><div class="author-avatar">KD</div><div><div class="author-name">Karabo D.</div><div class="author-location">Pretoria</div></div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Ordered the Gingham combo and wow — the scent layering is genius. I smell expensive all day!"</p>
+        <div class="testimonial-author"><div class="author-avatar">NZ</div><div><div class="author-name">Nandi Z.</div><div class="author-location">Cape Town</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO ORDER -->
+  <section class="section section-narrow" style="margin:0 auto">
+    <div class="section-header">
+      <h2 class="section-title" style="font-size:2rem">How to Order</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num">01</div><div><div class="step-title">Browse the Collection</div><div class="step-sub">Pick your favourite single or combo set</div></div></div>
+      <div class="step-card"><div class="step-num">02</div><div><div class="step-title">WhatsApp Your Order</div><div class="step-sub">Send us your selection via WhatsApp</div></div></div>
+      <div class="step-card"><div class="step-num">03</div><div><div class="step-title">Receive &amp; Enjoy</div><div class="step-sub">Fast delivery straight to your door</div></div></div>
+    </div>
+  </section>
+
+  <!-- CTA STRIP -->
+  <div class="cta-strip" style="max-width:900px;margin:48px auto">
+    <div class="cta-icon">✦</div>
+    <h2 class="cta-title">Ready to smell incredible?</h2>
+    <p class="cta-sub">DM us on WhatsApp to place your order — fast, easy, personal.</p>
+    <a href="#" onclick="openWA(event)" class="cta-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Order on WhatsApp
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">tshepi's scent</div>
+    <div class="footer-tagline">Smell expensive. Spend wisely.</div>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+      <a href="#" onclick="openWA(event)">WhatsApp</a>
+    </div>
+    <div class="footer-copy">© 2024 tshepi's scent. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const WA_NUMBER = '27000000000';
+
+    function openWA(e) {
+      e.preventDefault();
+      window.open(
+        'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent("Hi Tshepi! I'd like to place an order."),
+        '_blank'
+      );
+    }
+
+    const WA_ICON = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`;
+
+    const singles = [
+      {
+        id: 'vanilla28',
+        name: 'Yara × Vanilla 28',
+        subtitle: 'Sweet · Warm · Irresistible',
+        description: 'A warm, gourmand embrace — creamy vanilla meets the magnetic pull of Kayali Vanilla 28. The ultimate soft girl signature.',
+        price: 'R180',
+        badge: 'Best Seller',
+        image: 'https://media.base44.com/images/public/6a22ef6145cf160c20d851ea/3c3d5421f_Screenshot2026-06-05180632.png',
+      },
+      {
+        id: 'soljaneiro',
+        name: 'Yara × Sol de Janeiro 68',
+        subtitle: 'Tropical · Flirty · Bold',
+        description: 'Sunset energy. A flirty, coconut-kissed warmth that feels like summer skin — day or night.',
+        price: 'R180',
+        badge: 'Fan Favourite',
+        image: 'https://media.base44.com/images/public/6a22ef6145cf160c20d851ea/49fac4228_Screenshot2026-06-05180657.png',
+      },
+      {
+        id: 'coconutpassion',
+        name: 'Yara × Coconut Passion',
+        subtitle: 'Lush · Tropical · Golden',
+        description: 'Rich coconut with a golden, musky heart. The one people lean in for. Lingers beautifully for hours.',
+        price: 'R180',
+        badge: 'Top Pick',
+        image: 'https://media.base44.com/images/public/6a22ef6145cf160c20d851ea/f1bd19e1f_Screenshot2026-06-05180717.png',
+      },
+      {
+        id: 'yara-bodyspray',
+        name: 'Yara Perfume × Body Spray',
+        subtitle: 'Fresh · Clean · Everyday',
+        description: 'The effortless everyday option. Fresh and clean with staying power — a perfect base layer or standalone scent.',
+        price: 'R180',
+        badge: 'Everyday Staple',
+        image: 'https://media.base44.com/images/public/6a22ef6145cf160c20d851ea/dd310d7c2_Screenshot2026-06-05180835.png',
+      },
+    ];
+
+    const combos = [
+      {
+        id: 'gingham-combo',
+        name: 'Gingham Gorgeous Combo',
+        subtitle: 'Mist + Perfume + Body Cream',
+        description: 'The full-body layering experience. Apply the cream first, layer the mist, seal with the perfume — and watch how long you hold the scent.',
+        price: 'R300',
+        badge: 'Complete Set',
+        image: 'https://media.base44.com/images/public/user_6a1d6e50e012a165261449f4/e09015f36_WhatsAppImage2026-06-05at54434PM.jpeg',
+        pieces: ['Body Mist', 'Perfume', 'Body Cream'],
+      },
+      {
+        id: 'gingham-mist-lotion',
+        name: 'Gingham Gorgeous Mist + Lotion + Perfume',
+        subtitle: 'Mist + Perfume + Body Lotion',
+        description: 'A variation of our hero set — the Gingham Gorgeous range layered for maximum longevity. A scent that evolves through the day.',
+        price: 'R300',
+        badge: 'Premium Set',
+        image: 'https://media.base44.com/images/public/user_6a1d6e50e012a165261449f4/4fc75e763_WhatsAppImage2026-06-05at54443PM.jpeg',
+        pieces: ['Body Mist', 'Perfume', 'Body Lotion'],
+      },
+    ];
+
+    function buildCard(p, type) {
+      const waMsg = encodeURIComponent(`Hi Tshepi! I'd like to order the ${p.name} (${type}) at ${p.price}. Please let me know how to proceed.`);
+      const piecesHtml = p.pieces ? p.pieces.map(pc => `<span class="product-piece">${pc}</span>`).join('') : '';
+      return `
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="${p.image}" alt="${p.name}" loading="lazy" />
+            <span class="product-badge">${p.badge}</span>
+            <span class="product-type-tag">${type}</span>
+          </div>
+          <div class="product-body">
+            <div class="product-subtitle">${p.subtitle}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-desc">${p.description}</div>
+            ${piecesHtml ? `<div class="product-pieces">${piecesHtml}</div>` : ''}
+            <div class="product-footer">
+              <span class="product-price">${p.price}</span>
+              <a href="https://wa.me/${WA_NUMBER}?text=${waMsg}" target="_blank" class="product-wa-btn">
+                ${WA_ICON} Order
+              </a>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    document.getElementById('singles-grid').innerHTML = singles.map(p => buildCard(p, 'Single')).join('');
+    document.getElementById('combos-grid').innerHTML = combos.map(p => buildCard(p, 'Combo Set')).join('');
+  </script>
+</body>
+</html>
